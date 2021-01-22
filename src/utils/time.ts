@@ -2,9 +2,11 @@ import { flow } from 'fp-ts/function'
 import { map, chain, fromOption, Either } from 'fp-ts/lib/Either'
 import { matchC } from './fptsAdapters'
 import { tail, map as arrMap, zipWith, reduce } from 'fp-ts/Array'
+import * as t from 'io-ts';
 
 const MULTIPLIERS: number[] = [60 * 60 * 1000, 60 * 1000, 1000, 1];
 const REGEXP = /(?:([0-9]+):)?([0-9]+):([0-9]+)\.([0-9]+)/
+
 
 /**
  * Returns a new `Either` holding a `Left` value with 
@@ -14,7 +16,7 @@ const REGEXP = /(?:([0-9]+):)?([0-9]+):([0-9]+)\.([0-9]+)/
  *
  * @category utils
  */
-export const convertTimeToMillis:(string: string) => Either<Error, number> =
+const convertTimeToMillis: (string: string) => Either<Error, number> =
     flow(
         matchC(REGEXP),
         map(tail),
@@ -25,6 +27,16 @@ export const convertTimeToMillis:(string: string) => Either<Error, number> =
     )
 ;
 
+const isTime = (u: unknown): u is string => typeof u === "string" && REGEXP.test(u);
+
+// Type<A, O, I>
+const time = new t.Type<string, string, unknown>( 
+  "time",
+  isTime,
+  (input, context) => isTime(input) ? t.success(input) : t.failure(input, context),
+  t.identity,
+);
 
 
 
+export {convertTimeToMillis, time}
