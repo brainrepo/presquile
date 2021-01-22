@@ -46,7 +46,7 @@ export function convert(data: AuditionCVS[], totalDuration: number): Chapter[] {
 /**
  * Convert the AuditionCVS row format to the
  * Chapter format
- *
+ * 
  * @category converters
  */
 function auditionCVSToChapter(id: number, record: AuditionCVS): Chapter {
@@ -60,11 +60,17 @@ function auditionCVSToChapter(id: number, record: AuditionCVS): Chapter {
     })
 }
 
-
-function fixDurations(duration: number, chapters: Chapter[]): (idx: number, chapter: Chapter) => Chapter {
+/**
+ * Fix the endTimeMs null values with the next startTime value
+ * for the last chapter take the total duration value
+ *
+ * @category converters
+ */
+function fixDurations(totalDuration: number, chapters: Chapter[]): (idx: number, chapter: Chapter) => Chapter {
+    //TODO: Port using fp-ts array lib
     return (idx,  chapter) => {
         const time = chapters[idx + 1]?.startTimeMs;
-        const endTimeMs = (time === undefined) ? duration : time
+        const endTimeMs = (time === undefined) ? totalDuration : time
         return ({ ...chapter, endTimeMs })
     }
 }
