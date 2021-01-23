@@ -1,10 +1,9 @@
-import * as t from "io-ts";;
-import { convertTimeToMillis } from '../../utils/time';
-import { fold } from "fp-ts/lib/Either";
-import { Chapter } from "../../models/Chapter";
-import { pipe } from "fp-ts/lib/pipeable";
-import { mapWithIndex } from 'fp-ts/Array';
-import { AuditionCVSRow } from "./models"
+import { convertTimeToMillis } from '../../utils/time'
+import { fold } from 'fp-ts/lib/Either'
+import { Chapter } from '../../models/Chapter'
+import { pipe } from 'fp-ts/lib/pipeable'
+import { mapWithIndex } from 'fp-ts/Array'
+import { AuditionCVSRow } from './models'
 
 /**
  * Take an Either of AuditionCVS and convert in standard
@@ -45,7 +44,7 @@ function auditionCVSToChapter(id: number, record: AuditionCVSRow): Chapter {
  */
 function fixDurations(totalDuration: number, chapters: Chapter[]): (idx: number, chapter: Chapter) => Chapter {
     return (idx,  chapter) => {
-        const endTimeMs = chapters[idx + 1]?.startTimeMs || totalDuration;
+        const endTimeMs = chapters[idx + 1]?.startTimeMs || totalDuration
         return ({ ...chapter, endTimeMs })
     }
 }

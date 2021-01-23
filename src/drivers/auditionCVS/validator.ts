@@ -1,6 +1,6 @@
-import * as t from "io-ts";
-import { Either } from "fp-ts/lib/Either";
-import { AuditionCVS, auditionCVSCodec } from "./models"
+import * as t from 'io-ts'
+import { Either } from 'fp-ts/lib/Either'
+import { AuditionCVS, auditionCVSCodec } from './models'
 
 /**
  * Validate the objects extracted from Adobe Audition CVS
