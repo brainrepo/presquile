@@ -1,7 +1,6 @@
-import * as t from "io-ts";;
+import * as t from "io-ts";
 import { Either } from "fp-ts/lib/Either";
-import { AuditionCVS } from "./models"
-import { time } from '../../utils/time'
+import { AuditionCVS, auditionCVSCodec } from "./models"
 
 /**
  * Validate the objects extracted from Adobe Audition CVS
@@ -10,13 +9,6 @@ import { time } from '../../utils/time'
  *
  * @category drivers
  */
-export function validate(data: unknown): Either<t.Errors, AuditionCVS[]> {
-    const auditionCVSRow = t.array(
-        t.type({
-            Name: t.string,
-            Start: time,
-            Duration: time
-        })
-    )
-    return auditionCVSRow.decode(data)
+export function validate(data: unknown): Either<t.Errors, AuditionCVS> {
+    return auditionCVSCodec.decode(data)
 }

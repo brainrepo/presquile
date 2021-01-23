@@ -4,7 +4,7 @@ import { fold } from "fp-ts/lib/Either";
 import { Chapter } from "../../models/Chapter";
 import { pipe } from "fp-ts/lib/pipeable";
 import { mapWithIndex } from 'fp-ts/Array';
-import { AuditionCVS } from "./models"
+import { AuditionCVSRow } from "./models"
 
 /**
  * Take an Either of AuditionCVS and convert in standard
@@ -12,7 +12,7 @@ import { AuditionCVS } from "./models"
  *
  * @category converters
  */
-export function convert(data: AuditionCVS[], totalDuration: number): Chapter[] {
+export function convert(data: AuditionCVSRow[], totalDuration: number): Chapter[] {
     return pipe(
         data,
         mapWithIndex(auditionCVSToChapter),
@@ -26,7 +26,7 @@ export function convert(data: AuditionCVS[], totalDuration: number): Chapter[] {
  * 
  * @category converters
  */
-function auditionCVSToChapter(id: number, record: AuditionCVS): Chapter {
+function auditionCVSToChapter(id: number, record: AuditionCVSRow): Chapter {
     return ({
         elementID: `c${id}`,
         startTimeMs: pipe(convertTimeToMillis(record.Start), fold(() => 0, (t) => t)),
