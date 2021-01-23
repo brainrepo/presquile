@@ -1,5 +1,5 @@
 import * as t from "io-ts";;
-import { convertTimeToMillis, time } from '../../utils/time';
+import { convertTimeToMillis } from '../../utils/time';
 import { fold } from "fp-ts/lib/Either";
 import { Chapter } from "../../models/Chapter";
 import { pipe } from "fp-ts/lib/pipeable";
@@ -44,10 +44,8 @@ function auditionCVSToChapter(id: number, record: AuditionCVSRow): Chapter {
  * @category converters
  */
 function fixDurations(totalDuration: number, chapters: Chapter[]): (idx: number, chapter: Chapter) => Chapter {
-    //TODO: Port using fp-ts array lib
     return (idx,  chapter) => {
-        const time = chapters[idx + 1]?.startTimeMs;
-        const endTimeMs = (time === undefined) ? totalDuration : time
+        const endTimeMs = chapters[idx + 1]?.startTimeMs || totalDuration;
         return ({ ...chapter, endTimeMs })
     }
 }

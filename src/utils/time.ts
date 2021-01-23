@@ -16,7 +16,7 @@ const REGEXP = /(?:([0-9]+):)?([0-9]+):([0-9]+)\.([0-9]+)/
  *
  * @category utils
  */
-const convertTimeToMillis: (string: string) => Either<Error, number> =
+export const convertTimeToMillis: (string: string) => Either<Error, number> =
     flow(
         matchC(REGEXP),
         map(tail),
@@ -29,14 +29,22 @@ const convertTimeToMillis: (string: string) => Either<Error, number> =
 
 const isTime = (u: unknown): u is string => typeof u === "string" && REGEXP.test(u);
 
-// Type<A, O, I>
-const time = new t.Type<string, string, unknown>( 
+
+/**
+ * Define time coded for time validation
+ *
+ * @category utils
+ */
+export const timeCodec = new t.Type<string, string, unknown>( 
   "time",
   isTime,
   (input, context) => isTime(input) ? t.success(input) : t.failure(input, context),
   t.identity,
 );
 
-
-
-export {convertTimeToMillis, time}
+/**
+ * Export time type from codec
+ *
+ * @category utils
+ */
+export type time = t.TypeOf<typeof timeCodec>

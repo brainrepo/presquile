@@ -1,10 +1,10 @@
-import { time } from '../../utils/time'
+import { timeCodec } from '../../utils/time'
 import * as t from "io-ts";
 
 export const auditionCVSRowCodec = t.type({
     Name: t.string,
-    Start: time,
-    Duration: time
+    Start: timeCodec,
+    Duration: timeCodec
 });
 export type AuditionCVSRow = t.TypeOf<typeof auditionCVSRowCodec>
 
