@@ -15,8 +15,8 @@ describe('Audition CVS validator', () => {
       Start: '12:00.000',
       Duration: 'not valid time',
     }
-    expect(validate([obj, obj])).toBeLeftWithErrorsMatching([
-      'Invalid value "not valid time" supplied to : Array<{ Name: string, Start: time, Duration: time }>/0: { Name: string, Start: time, Duration: time }/Duration: time',
-    ])
+    expect(validate([obj, obj])).toEqualLeft(
+      Error('CVS validation error')
+    )
   })
 })

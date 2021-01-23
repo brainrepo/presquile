@@ -1,6 +1,6 @@
-import * as t from 'io-ts'
-import { Either } from 'fp-ts/lib/Either'
+import { Either, mapLeft } from 'fp-ts/lib/Either'
 import { AuditionCVS, auditionCVSCodec } from './models'
+import { pipe } from 'fp-ts/lib/pipeable'
 
 /**
  * Validate the objects extracted from Adobe Audition CVS
@@ -9,6 +9,9 @@ import { AuditionCVS, auditionCVSCodec } from './models'
  *
  * @category drivers
  */
-export function validate(data: unknown): Either<t.Errors, AuditionCVS> {
-    return auditionCVSCodec.decode(data)
+export function validate(data: unknown): Either<Error, AuditionCVS> {
+    return pipe(
+        auditionCVSCodec.decode(data), 
+        mapLeft(() => Error('CVS validation error')),
+        )
 }
