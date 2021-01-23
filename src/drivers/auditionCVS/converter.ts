@@ -1,33 +1,10 @@
 import * as t from "io-ts";;
-import { convertTimeToMillis, time } from '../utils/time';
-import { Either, fold, map } from "fp-ts/lib/Either";
-import { Chapter } from "../models/Chapter";
+import { convertTimeToMillis, time } from '../../utils/time';
+import { fold } from "fp-ts/lib/Either";
+import { Chapter } from "../../models/Chapter";
 import { pipe } from "fp-ts/lib/pipeable";
-import { mapWithIndex, reduceWithIndex } from 'fp-ts/Array';
-
-interface AuditionCVS {
-    Name: string,
-    Start: string,
-    Duration: string
-}
-
-/**
- * Validate the objects extracted from Adobe Audition CVS
- * The validation checks only the `Name`, 
- * `Start` and `Duration`
- *
- * @category drivers
- */
-export function validate(data: unknown): Either<t.Errors, AuditionCVS[]> {
-    const auditionCVSRow = t.array(
-        t.type({
-            Name: t.string,
-            Start: time,
-            Duration: time
-        })
-    )
-    return auditionCVSRow.decode(data)
-}
+import { mapWithIndex } from 'fp-ts/Array';
+import { AuditionCVS } from "./models"
 
 /**
  * Take an Either of AuditionCVS and convert in standard
