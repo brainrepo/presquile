@@ -1,6 +1,6 @@
 import { flow } from 'fp-ts/function'
 import { map, chain, fromOption, Either } from 'fp-ts/lib/Either'
-import { matchC } from './fptsAdapters'
+import { matchC } from './fptsAdapters/match'
 import { tail, map as arrMap, zipWith, reduce } from 'fp-ts/Array'
 import * as t from 'io-ts';
 

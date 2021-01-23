@@ -1,4 +1,4 @@
-import { match } from '../fptsAdapters';
+import { match } from '../match';
 import '@relmify/jest-fp-ts';
 
 describe("Match", () => {
