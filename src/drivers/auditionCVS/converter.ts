@@ -4,6 +4,7 @@ import { Chapter } from '../../models/Chapter'
 import { pipe } from 'fp-ts/lib/pipeable'
 import { mapWithIndex } from 'fp-ts/Array'
 import { AuditionCVSRow } from './models'
+import { Chapters } from '../../models/Chapters'
 
 /**
  * Take an Either of AuditionCVS and convert in standard
@@ -11,13 +12,34 @@ import { AuditionCVSRow } from './models'
  *
  * @category converters
  */
-export function convert(data: AuditionCVSRow[], totalDuration: number): Chapter[] {
+export function convert(data: AuditionCVSRow[], totalDuration: number): Chapters {
     return pipe(
         data,
         mapWithIndex(auditionCVSToChapter),
-        e => mapWithIndex(fixDurations(totalDuration, e))(e)
+        e => mapWithIndex(fixDurations(totalDuration, e))(e),
+        addTocs
     )
 }
+
+/**
+ * Add tableOfContents to chapter data
+ *
+ * @category converters
+ */
+export function addTocs(chapters:Chapter[]):Chapters{
+    return ({
+        chapter: chapters,
+        tableOfContents:[{
+            elementID: 'toc',
+            isOrdered: true,
+            elements: chapters.map((e) => e.elementID),
+            tags: {
+                title: 'chapters-chapz',
+            },
+        }]
+    })
+}
+
 
 /**
  * Convert the AuditionCVS row format to the

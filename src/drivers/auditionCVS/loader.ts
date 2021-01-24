@@ -5,13 +5,17 @@ import { validate } from './validator'
 import { parse } from '../../utils/cvs'
 import { Options } from 'csv-parse'
 import { convert } from './converter'
-import { Chapter } from '../../models/Chapter'
 import { loadAudioMetadata, mp3Data } from '../../mp3/mp3'
 import { pipe } from 'fp-ts/lib/pipeable'
+import { Chapters } from '../../models/Chapters'
 
 
-
-export function load(filePath: string, mp3FilePath:string):TaskEither<Error, Chapter[]> {
+/**
+ * Load CVS from file and convert to Chapters data
+ *
+ * @category loaders
+ */
+export function load(filePath: string, mp3FilePath:string):TaskEither<Error, Chapters> {
   return flow(
     readFile,
     chain((content) => fromEither(parse(content, cvsConf))),
