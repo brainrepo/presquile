@@ -44,7 +44,7 @@ function auditionCVSToChapter(id: number, record: AuditionCVSRow): Chapter {
  */
 function fixDurations(totalDuration: number, chapters: Chapter[]): (idx: number, chapter: Chapter) => Chapter {
     return (idx,  chapter) => {
-        const endTimeMs = chapters[idx + 1]?.startTimeMs || totalDuration
+        const endTimeMs = chapters[idx + 1]?.startTimeMs ?? totalDuration
         return ({ ...chapter, endTimeMs })
     }
 }
