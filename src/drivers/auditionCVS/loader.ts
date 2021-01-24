@@ -6,13 +6,22 @@ import { parse } from '../../utils/cvs'
 import { Options } from 'csv-parse'
 import { convert } from './converter'
 import { Chapter } from '../../models/Chapter'
+import { loadAudioMetadata, mp3Data } from '../../mp3/mp3'
+import { pipe } from 'fp-ts/lib/pipeable'
 
-export function load(filePath: string):TaskEither<Error, Chapter[]> {
+
+
+export function load(filePath: string, mp3FilePath:string):TaskEither<Error, Chapter[]> {
   return flow(
     readFile,
     chain((content) => fromEither(parse(content, cvsConf))),
     chainEitherK(validate),
-    map(d => convert(d,100000))
+    chain((content) => {
+      return pipe(
+        loadAudioMetadata(mp3FilePath),
+        map((metadata:mp3Data) => convert(content, metadata.duration))
+      )
+    })
   )(filePath)
 }
 

@@ -2,7 +2,7 @@ import { pipe } from 'fp-ts/lib/function'
 import { TaskEither, tryCatch, map, chain, right, left } from 'fp-ts/lib/TaskEither'
 import { IAudioMetadata, parseFile } from 'music-metadata'
 
-interface mp3Data {
+export interface mp3Data {
     isMp3: boolean,
     duration?: number
 }
