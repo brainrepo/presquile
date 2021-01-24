@@ -1,9 +1,10 @@
 {
   "name": "@brainrepo/presquile",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Adobe audition to Mp3 Chapters",
   "main": "index.js",
   "license": "MIT",
+  "repository":"https://github.com/brainrepo/presquile",
   "bin": {
     "presquile": "./dist/index.js"
   },
