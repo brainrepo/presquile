@@ -9,6 +9,7 @@
   },
   "scripts": {
     "build:watch": "tsc -w && node dist/index.js",
+    "build": "tsc",
     "start": "tsc && node dist/index.js",
     "test": "jest",
     "lint": "eslint . --ext .ts"
