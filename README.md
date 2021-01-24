@@ -1,6 +1,16 @@
 <div style="padding: 0 0 25px">
+
+<a href="https://www.npmjs.com/package/@brainrepo/presquile">
+<img src="https://img.shields.io/npm/v/@brainrepo/presquile" alt="npm downloads" height="20">
+</a>
+
+
 <a href="https://www.npmjs.com/package/@brainrepo/presquile">
 <img src="https://img.shields.io/david/brainrepo/presquile" alt="npm downloads" height="20">
+</a>
+
+<a href="https://github.com/brainrepo/presquile/actions?query=workflow%3A%22Node.js+CI%22">
+<img src="https://img.shields.io/github/workflow/status/brainrepo/presquile/Node.js%20CI" alt="npm downloads" height="20">
 </a>
 
 
